@@ -7,6 +7,9 @@
     const modeInputs = Array.from(document.querySelectorAll("input[name='mode']"));
     const symbolInputs = Array.from(document.querySelectorAll("input[name='symbol']"));
     const symbolSelection = document.querySelector(".symbol-selection");
+    const playerOneInput = document.querySelector("#player-one");
+    const playerTwoInput = document.querySelector("#player-two");
+    const playerTwoRow = document.querySelector(".player-two-row");
 
     const state = {
         board: Array(9).fill(""),
@@ -16,6 +19,8 @@
         locked: false,
         playerSymbol: "X",
         computerSymbol: "O",
+        playerOneName: "Player 1",
+        playerTwoName: "Player 2",
     };
 
     const wins = [
@@ -31,6 +36,20 @@
 
     const setStatus = (message) => {
         statusEl.textContent = message;
+    };
+
+    const getPlayerName = (symbol) => {
+        if (state.mode === "pvp") {
+            return symbol === "X" ? state.playerOneName : state.playerTwoName;
+        }
+        return symbol === state.playerSymbol ? state.playerOneName : "Computer";
+    };
+
+    const updateNames = () => {
+        const one = playerOneInput.value.trim();
+        const two = playerTwoInput.value.trim();
+        state.playerOneName = one || "Player 1";
+        state.playerTwoName = two || "Player 2";
     };
 
     const render = () => {
@@ -69,7 +88,7 @@
 
     const switchPlayer = () => {
         state.current = state.current === "X" ? "O" : "X";
-        setStatus(`Current player: ${state.current}`);
+        setStatus(`Current player: ${getPlayerName(state.current)} (${state.current})`);
     };
 
     const placeMark = (index) => {
@@ -80,7 +99,7 @@
     const handlePostMove = () => {
         const winner = getWinner();
         if (winner) {
-            finishGame(`${winner} wins!`);
+            finishGame(`${getPlayerName(winner)} wins!`);
             return;
         }
         if (getEmptyIndices().length === 0) {
@@ -114,11 +133,12 @@
 
     const startGame = (mode) => {
         state.mode = mode;
+        updateNames();
         state.board = Array(9).fill("");
         state.current = "X";
         state.running = true;
         state.locked = false;
-        setStatus("Current player: X");
+        setStatus(`Current player: ${getPlayerName("X")} (X)`);
         render();
         if (state.mode === "pve" && state.current === state.computerSymbol) {
             queueComputerMove();
@@ -136,6 +156,7 @@
                 input.checked = false;
             });
         }
+        playerTwoRow.classList.toggle("is-hidden", state.mode !== "pvp");
         symbolSelection.classList.toggle("is-hidden", state.mode !== "pve");
         setStatus(clearMode ? "Select a game mode to start." : "Select a game mode or restart.");
         render();
@@ -164,6 +185,7 @@
     modeInputs.forEach((input) => {
         input.addEventListener("change", (event) => {
             const mode = event.target.value;
+            playerTwoRow.classList.toggle("is-hidden", mode !== "pvp");
             symbolSelection.classList.toggle("is-hidden", mode !== "pve");
             startGame(mode);
         });
@@ -174,6 +196,15 @@
             updateSymbols(event.target.value);
             if (state.mode === "pve") {
                 startGame("pve");
+            }
+        });
+    });
+
+    [playerOneInput, playerTwoInput].forEach((input) => {
+        input.addEventListener("input", () => {
+            updateNames();
+            if (state.running) {
+                setStatus(`Current player: ${getPlayerName(state.current)} (${state.current})`);
             }
         });
     });

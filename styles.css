@@ -38,6 +38,46 @@ body {
     box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08);
 }
 
+.player-inputs {
+    width: 100%;
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+}
+
+.player-two-row {
+    display: grid;
+    gap: 6px;
+    justify-items: center;
+}
+
+.player-two-row.is-hidden {
+    display: none;
+}
+
+.player-label {
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.player-input {
+    width: min(280px, 90vw);
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 2px solid var(--board);
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: #fff;
+}
+
+.player-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 106, 76, 0.25);
+}
+
 .game-buttons {
     display: flex;
     gap: 12px;

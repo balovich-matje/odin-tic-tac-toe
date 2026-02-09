@@ -10,6 +10,15 @@
 
 <body>
     <div class="game-controls">
+        <div class="player-inputs">
+            <label class="player-label" for="player-one">Player 1</label>
+            <input class="player-input" id="player-one" type="text" placeholder="Enter your name" autocomplete="name">
+            <div class="player-two-row is-hidden">
+                <label class="player-label" for="player-two">Player 2</label>
+                <input class="player-input" id="player-two" type="text" placeholder="Enter second name"
+                    autocomplete="name">
+            </div>
+        </div>
         <div class="game-mode-selection">
             <span class="mode-text">PVP</span>
             <div class="mode-toggle mode-toggle--mode" role="radiogroup" aria-label="Game mode">
