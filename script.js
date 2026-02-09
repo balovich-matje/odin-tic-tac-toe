@@ -5,6 +5,8 @@
     const endBtn = document.querySelector(".end-game");
     const restartBtn = document.querySelector(".restart-game");
     const modeInputs = Array.from(document.querySelectorAll("input[name='mode']"));
+    const symbolInputs = Array.from(document.querySelectorAll("input[name='symbol']"));
+    const symbolSelection = document.querySelector(".symbol-selection");
 
     const state = {
         board: Array(9).fill(""),
@@ -12,6 +14,8 @@
         running: false,
         mode: null,
         locked: false,
+        playerSymbol: "X",
+        computerSymbol: "O",
     };
 
     const wins = [
@@ -35,6 +39,11 @@
             const disabled = !state.running || state.board[index] !== "" || state.locked;
             cell.classList.toggle("is-disabled", disabled);
         });
+    };
+
+    const updateSymbols = (value) => {
+        state.playerSymbol = value;
+        state.computerSymbol = value === "X" ? "O" : "X";
     };
 
     const getWinner = () => {
@@ -79,7 +88,7 @@
             return;
         }
         switchPlayer();
-        if (state.mode === "pve" && state.current === "O") {
+        if (state.mode === "pve" && state.current === state.computerSymbol) {
             queueComputerMove();
         }
     };
@@ -97,7 +106,7 @@
             }
             const choice = empty[Math.floor(Math.random() * empty.length)];
             state.locked = false;
-            state.current = "O";
+            state.current = state.computerSymbol;
             placeMark(choice);
             handlePostMove();
         }, 350);
@@ -111,6 +120,9 @@
         state.locked = false;
         setStatus("Current player: X");
         render();
+        if (state.mode === "pve" && state.current === state.computerSymbol) {
+            queueComputerMove();
+        }
     };
 
     const resetGame = ({ clearMode }) => {
@@ -124,6 +136,7 @@
                 input.checked = false;
             });
         }
+        symbolSelection.classList.toggle("is-hidden", state.mode !== "pve");
         setStatus(clearMode ? "Select a game mode to start." : "Select a game mode or restart.");
         render();
     };
@@ -132,7 +145,7 @@
         if (!state.running || state.locked) {
             return;
         }
-        if (state.mode === "pve" && state.current === "O") {
+        if (state.mode === "pve" && state.current === state.computerSymbol) {
             return;
         }
         const cell = event.target.closest(".cell");
@@ -150,7 +163,18 @@
     boardEl.addEventListener("click", onCellClick);
     modeInputs.forEach((input) => {
         input.addEventListener("change", (event) => {
-            startGame(event.target.value);
+            const mode = event.target.value;
+            symbolSelection.classList.toggle("is-hidden", mode !== "pve");
+            startGame(mode);
+        });
+    });
+
+    symbolInputs.forEach((input) => {
+        input.addEventListener("change", (event) => {
+            updateSymbols(event.target.value);
+            if (state.mode === "pve") {
+                startGame("pve");
+            }
         });
     });
 
@@ -166,5 +190,6 @@
         resetGame({ clearMode: true });
     });
 
+    updateSymbols("X");
     resetGame({ clearMode: true });
 })();

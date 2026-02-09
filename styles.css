@@ -31,20 +31,106 @@ body {
     border-radius: 14px;
     padding: 16px 20px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px 20px;
+    flex-direction: column;
+    gap: 12px;
     align-items: center;
-    justify-content: space-between;
+    text-align: center;
     box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08);
 }
 
+.game-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .game-mode-selection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-size: 0.95rem;
     color: var(--muted);
 }
 
-.game-mode-selection label {
+.symbol-selection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.symbol-selection.is-hidden {
+    display: none;
+}
+
+.mode-text {
     color: var(--ink);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.mode-toggle {
+    position: relative;
+    width: 64px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+}
+
+.mode-toggle input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toggle-track {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid var(--board);
+    box-shadow: inset 0 0 0 2px rgba(31, 41, 51, 0.08);
+}
+
+.toggle-thumb {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    transform: translateX(-16px);
+    transition: transform 140ms ease;
+}
+
+.mode-toggle #pve:checked~.toggle-thumb {
+    transform: translateX(16px);
+}
+
+.symbol-toggle #symbol-o:checked~.toggle-thumb {
+    transform: translateX(16px);
+}
+
+.toggle-hit {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.toggle-left {
+    left: 0;
+}
+
+.toggle-right {
+    right: 0;
+}
+
+.mode-toggle input[type="radio"]:focus-visible~.toggle-track {
+    box-shadow: 0 0 0 3px rgba(212, 106, 76, 0.3);
 }
 
 .game-controls button {
@@ -116,15 +202,9 @@ body {
 }
 
 .current-player {
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     font-weight: 600;
     color: var(--ink);
     min-height: 1.5rem;
-}
-
-@media (max-width: 640px) {
-    .game-controls {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+    margin-top: 32px;
 }

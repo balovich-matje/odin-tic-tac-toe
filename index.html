@@ -11,13 +11,33 @@
 <body>
     <div class="game-controls">
         <div class="game-mode-selection">
-            <input type="radio" id="pve" name="mode" value="pve">
-            <label for="pve">Player vs. Computer (PVE)</label><br>
-            <input type="radio" id="pvp" name="mode" value="pvp">
-            <label for="pvp">Player vs. Player (PVP)</label><br>
+            <span class="mode-text">PVP</span>
+            <div class="mode-toggle" role="radiogroup" aria-label="Game mode">
+                <input type="radio" id="pvp" name="mode" value="pvp">
+                <input type="radio" id="pve" name="mode" value="pve">
+                <label class="toggle-hit toggle-left" for="pvp" aria-label="Player vs. Player"></label>
+                <label class="toggle-hit toggle-right" for="pve" aria-label="Player vs. Computer"></label>
+                <span class="toggle-track" aria-hidden="true"></span>
+                <span class="toggle-thumb" aria-hidden="true"></span>
+            </div>
+            <span class="mode-text">PVE</span>
         </div>
-        <button class="end-game">End game</button>
-        <button class="restart-game">Restart game</button>
+        <div class="symbol-selection is-hidden">
+            <span class="mode-text">X</span>
+            <div class="mode-toggle symbol-toggle" role="radiogroup" aria-label="Player symbol">
+                <input type="radio" id="symbol-x" name="symbol" value="X" checked>
+                <input type="radio" id="symbol-o" name="symbol" value="O">
+                <label class="toggle-hit toggle-left" for="symbol-x" aria-label="Play as X"></label>
+                <label class="toggle-hit toggle-right" for="symbol-o" aria-label="Play as O"></label>
+                <span class="toggle-track" aria-hidden="true"></span>
+                <span class="toggle-thumb" aria-hidden="true"></span>
+            </div>
+            <span class="mode-text">O</span>
+        </div>
+        <div class="game-buttons">
+            <button class="end-game">End game</button>
+            <button class="restart-game">Restart game</button>
+        </div>
     </div>
     <div class="container">
         <div class="board">
