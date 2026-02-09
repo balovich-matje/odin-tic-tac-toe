@@ -9,7 +9,30 @@
 </head>
 
 <body>
-
+    <div class="game-controls">
+        <div class="game-mode-selection">
+            <input type="radio" id="pve" name="pve">
+            <label for="pve">Player vs. Computer (PVE)</label><br>
+            <input type="radio" id="pvp" name="pvp">
+            <label for="pvp">Player vs. Player (PVP)</label><br>
+        </div>
+        <button class="end-game">End game</button>
+        <button class="restart-game">Restart game</button>
+    </div>
+    <div class="container">
+        <div class="board">
+            <div class="cell1"></div>
+            <div class="cell2"></div>
+            <div class="cell3"></div>
+            <div class="cell4"></div>
+            <div class="cell5"></div>
+            <div class="cell6"></div>
+            <div class="cell7"></div>
+            <div class="cell8"></div>
+            <div class="cell9"></div>
+        </div>
+        <div class="current-player"></div>
+    </div>
     <script src="script.js"></script>
 </body>
 
