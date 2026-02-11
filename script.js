@@ -10,6 +10,9 @@
     const playerOneInput = document.querySelector("#player-one");
     const playerTwoInput = document.querySelector("#player-two");
     const playerTwoRow = document.querySelector(".player-two-row");
+    const winLineEl = document.createElement("div");
+    winLineEl.className = "win-line";
+    boardEl.appendChild(winLineEl);
 
     const state = {
         board: Array(9).fill(""),
@@ -32,6 +35,17 @@
         [2, 5, 8],
         [0, 4, 8],
         [2, 4, 6],
+    ];
+
+    const winLinePositions = [
+        { x: "50%", y: "16.7%", rotate: "0deg", length: "90%" },
+        { x: "50%", y: "50%", rotate: "0deg", length: "90%" },
+        { x: "50%", y: "83.3%", rotate: "0deg", length: "90%" },
+        { x: "16.7%", y: "50%", rotate: "90deg", length: "90%" },
+        { x: "50%", y: "50%", rotate: "90deg", length: "90%" },
+        { x: "83.3%", y: "50%", rotate: "90deg", length: "90%" },
+        { x: "50%", y: "50%", rotate: "45deg", length: "120%" },
+        { x: "50%", y: "50%", rotate: "-45deg", length: "120%" },
     ];
 
     const setStatus = (message) => {
@@ -66,12 +80,33 @@
     };
 
     const getWinner = () => {
-        for (const [a, b, c] of wins) {
+        for (let i = 0; i < wins.length; i += 1) {
+            const [a, b, c] = wins[i];
             if (state.board[a] && state.board[a] === state.board[b] && state.board[a] === state.board[c]) {
-                return state.board[a];
+                return { symbol: state.board[a], comboIndex: i };
             }
         }
         return null;
+    };
+
+    const clearWinLine = () => {
+        winLineEl.classList.remove("is-visible");
+        winLineEl.style.removeProperty("--line-x");
+        winLineEl.style.removeProperty("--line-y");
+        winLineEl.style.removeProperty("--line-rotate");
+        winLineEl.style.removeProperty("--line-length");
+    };
+
+    const showWinLine = (comboIndex) => {
+        const config = winLinePositions[comboIndex];
+        if (!config) {
+            return;
+        }
+        winLineEl.style.setProperty("--line-x", config.x);
+        winLineEl.style.setProperty("--line-y", config.y);
+        winLineEl.style.setProperty("--line-rotate", config.rotate);
+        winLineEl.style.setProperty("--line-length", config.length);
+        winLineEl.classList.add("is-visible");
     };
 
     const getEmptyIndices = () =>
@@ -99,7 +134,8 @@
     const handlePostMove = () => {
         const winner = getWinner();
         if (winner) {
-            finishGame(`${getPlayerName(winner)} wins!`);
+            showWinLine(winner.comboIndex);
+            finishGame(`${getPlayerName(winner.symbol)} wins!`);
             return;
         }
         if (getEmptyIndices().length === 0) {
@@ -138,6 +174,7 @@
         state.current = "X";
         state.running = true;
         state.locked = false;
+        clearWinLine();
         setStatus(`Current player: ${getPlayerName("X")} (X)`);
         render();
         if (state.mode === "pve" && state.current === state.computerSymbol) {
@@ -150,6 +187,7 @@
         state.current = "X";
         state.running = false;
         state.locked = false;
+        clearWinLine();
         if (clearMode) {
             state.mode = null;
             modeInputs.forEach((input) => {

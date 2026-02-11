@@ -223,6 +223,26 @@ body {
     padding: 8px;
     border-radius: 18px;
     box-shadow: 10px 12px 0 rgba(0, 0, 0, 0.14);
+    position: relative;
+}
+
+.win-line {
+    position: absolute;
+    top: var(--line-y, 50%);
+    left: var(--line-x, 50%);
+    width: var(--line-length, 90%);
+    height: 6px;
+    background: var(--accent);
+    border-radius: 999px;
+    transform: translate(-50%, -50%) rotate(var(--line-rotate, 0deg)) scaleX(0);
+    transform-origin: center;
+    transition: transform 260ms ease;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+.win-line.is-visible {
+    transform: translate(-50%, -50%) rotate(var(--line-rotate, 0deg)) scaleX(1);
 }
 
 .cell {
