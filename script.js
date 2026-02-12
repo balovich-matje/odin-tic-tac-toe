@@ -14,6 +14,35 @@
     winLineEl.className = "win-line";
     boardEl.appendChild(winLineEl);
 
+    const locale = document.documentElement.lang === "ru" ? "ru" : "en";
+    const strings = {
+        en: {
+            player1: "Player 1",
+            player2: "Player 2",
+            computer: "Computer",
+            currentPlayer: "Current player",
+            wins: "wins!",
+            draw: "It's a draw!",
+            thinking: "Computer is thinking...",
+            selectModeStart: "Select a game mode to start.",
+            selectModeRestart: "Select a game mode or restart.",
+        },
+        ru: {
+            player1: "Игрок 1",
+            player2: "Игрок 2",
+            computer: "Компьютер",
+            currentPlayer: "Ход",
+            wins: "победил!",
+            draw: "Ничья!",
+            thinking: "Компьютер думает...",
+            selectModeStart: "Выберите режим игры, чтобы начать.",
+            selectModeRestart: "Выберите режим игры или перезапустите.",
+        },
+    };
+    const t = (key) => strings[locale][key];
+    const formatCurrentPlayer = (name, symbol) => `${t("currentPlayer")}: ${name} (${symbol})`;
+    const formatWin = (name) => `${name} ${t("wins")}`;
+
     const state = {
         board: Array(9).fill(""),
         current: "X",
@@ -56,14 +85,14 @@
         if (state.mode === "pvp") {
             return symbol === "X" ? state.playerOneName : state.playerTwoName;
         }
-        return symbol === state.playerSymbol ? state.playerOneName : "Computer";
+        return symbol === state.playerSymbol ? state.playerOneName : t("computer");
     };
 
     const updateNames = () => {
         const one = playerOneInput.value.trim();
         const two = playerTwoInput.value.trim();
-        state.playerOneName = one || "Player 1";
-        state.playerTwoName = two || "Player 2";
+        state.playerOneName = one || t("player1");
+        state.playerTwoName = two || t("player2");
     };
 
     const render = () => {
@@ -123,7 +152,7 @@
 
     const switchPlayer = () => {
         state.current = state.current === "X" ? "O" : "X";
-        setStatus(`Current player: ${getPlayerName(state.current)} (${state.current})`);
+        setStatus(formatCurrentPlayer(getPlayerName(state.current), state.current));
     };
 
     const placeMark = (index) => {
@@ -135,11 +164,11 @@
         const winner = getWinner();
         if (winner) {
             showWinLine(winner.comboIndex);
-            finishGame(`${getPlayerName(winner.symbol)} wins!`);
+            finishGame(formatWin(getPlayerName(winner.symbol)));
             return;
         }
         if (getEmptyIndices().length === 0) {
-            finishGame("It's a draw!");
+            finishGame(t("draw"));
             return;
         }
         switchPlayer();
@@ -150,7 +179,7 @@
 
     const queueComputerMove = () => {
         state.locked = true;
-        setStatus("Computer is thinking...");
+        setStatus(t("thinking"));
         render();
         window.setTimeout(() => {
             const empty = getEmptyIndices();
@@ -175,7 +204,7 @@
         state.running = true;
         state.locked = false;
         clearWinLine();
-        setStatus(`Current player: ${getPlayerName("X")} (X)`);
+        setStatus(formatCurrentPlayer(getPlayerName("X"), "X"));
         render();
         if (state.mode === "pve" && state.current === state.computerSymbol) {
             queueComputerMove();
@@ -196,7 +225,7 @@
         }
         playerTwoRow.classList.toggle("is-hidden", state.mode !== "pvp");
         symbolSelection.classList.toggle("is-hidden", state.mode !== "pve");
-        setStatus(clearMode ? "Select a game mode to start." : "Select a game mode or restart.");
+        setStatus(clearMode ? t("selectModeStart") : t("selectModeRestart"));
         render();
     };
 
@@ -242,7 +271,7 @@
         input.addEventListener("input", () => {
             updateNames();
             if (state.running) {
-                setStatus(`Current player: ${getPlayerName(state.current)} (${state.current})`);
+                setStatus(formatCurrentPlayer(getPlayerName(state.current), state.current));
             }
         });
     });

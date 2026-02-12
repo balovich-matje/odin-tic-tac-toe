@@ -1,35 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Крестики-нолики</title>
 </head>
 
 <body>
-    <nav class="lang-switcher" aria-label="Language switcher">
-        <a class="lang-link is-active" href="./index.html" lang="en" aria-current="page">EN</a>
-        <a class="lang-link" href="ru/index.html" lang="ru">RU</a>
+    <nav class="lang-switcher" aria-label="Переключатель языка">
+        <a class="lang-link" href="../en/index.html" lang="en">EN</a>
+        <a class="lang-link is-active" href="./index.html" lang="ru" aria-current="page">RU</a>
     </nav>
     <div class="game-controls">
         <div class="player-inputs">
-            <label class="player-label" for="player-one">Player 1</label>
-            <input class="player-input" id="player-one" type="text" placeholder="Enter your name" autocomplete="name">
+            <label class="player-label" for="player-one">Игрок 1</label>
+            <input class="player-input" id="player-one" type="text" placeholder="Введите имя" autocomplete="name">
             <div class="player-two-row is-hidden">
-                <label class="player-label" for="player-two">Player 2</label>
-                <input class="player-input" id="player-two" type="text" placeholder="Enter second name"
+                <label class="player-label" for="player-two">Игрок 2</label>
+                <input class="player-input" id="player-two" type="text" placeholder="Введите второе имя"
                     autocomplete="name">
             </div>
         </div>
         <div class="game-mode-selection">
             <span class="mode-text">PVP</span>
-            <div class="mode-toggle mode-toggle--mode" role="radiogroup" aria-label="Game mode">
+            <div class="mode-toggle mode-toggle--mode" role="radiogroup" aria-label="Режим игры">
                 <input type="radio" id="pvp" name="mode" value="pvp">
                 <input type="radio" id="pve" name="mode" value="pve">
-                <label class="toggle-hit toggle-left" for="pvp" aria-label="Player vs. Player"></label>
-                <label class="toggle-hit toggle-right" for="pve" aria-label="Player vs. Computer"></label>
+                <label class="toggle-hit toggle-left" for="pvp" aria-label="Игрок против игрока"></label>
+                <label class="toggle-hit toggle-right" for="pve" aria-label="Игрок против компьютера"></label>
                 <span class="toggle-track" aria-hidden="true"></span>
                 <span class="toggle-thumb" aria-hidden="true"></span>
             </div>
@@ -37,19 +37,19 @@
         </div>
         <div class="symbol-selection is-hidden">
             <span class="mode-text">X</span>
-            <div class="mode-toggle symbol-toggle" role="radiogroup" aria-label="Player symbol">
+            <div class="mode-toggle symbol-toggle" role="radiogroup" aria-label="Символ игрока">
                 <input type="radio" id="symbol-x" name="symbol" value="X" checked>
                 <input type="radio" id="symbol-o" name="symbol" value="O">
-                <label class="toggle-hit toggle-left" for="symbol-x" aria-label="Play as X"></label>
-                <label class="toggle-hit toggle-right" for="symbol-o" aria-label="Play as O"></label>
+                <label class="toggle-hit toggle-left" for="symbol-x" aria-label="Играть за X"></label>
+                <label class="toggle-hit toggle-right" for="symbol-o" aria-label="Играть за O"></label>
                 <span class="toggle-track" aria-hidden="true"></span>
                 <span class="toggle-thumb" aria-hidden="true"></span>
             </div>
             <span class="mode-text">O</span>
         </div>
         <div class="game-buttons">
-            <button class="end-game">End game</button>
-            <button class="restart-game">Restart game</button>
+            <button class="end-game">Завершить игру</button>
+            <button class="restart-game">Перезапустить игру</button>
         </div>
     </div>
     <div class="container">
@@ -66,7 +66,7 @@
         </div>
         <div class="current-player"></div>
     </div>
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
 </body>
 
 </html>

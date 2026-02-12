@@ -21,7 +21,49 @@ body {
     background: radial-gradient(circle at top, #fff6e7 0%, var(--bg) 45%, #e9dfd0 100%);
     color: var(--ink);
     font-family: "Georgia", "Times New Roman", serif;
-    padding: 32px 16px 48px;
+    padding: 64px 16px 48px;
+}
+
+.lang-switcher {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    background: var(--panel);
+    border: 2px solid var(--board);
+    border-radius: 999px;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.08);
+    z-index: 10;
+}
+
+.lang-link {
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.lang-link:hover {
+    border-color: var(--board);
+    transform: translateY(-1px);
+}
+
+.lang-link:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 106, 76, 0.3);
+}
+
+.lang-link.is-active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--board);
 }
 
 .game-controls {
